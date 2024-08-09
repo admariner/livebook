@@ -263,7 +263,7 @@ defprotocol Livebook.Runtime do
   @type grid_output :: %{
           type: :grid,
           outputs: list(t()),
-          columns: pos_integer(),
+          columns: pos_integer() | tuple(),
           gap: non_neg_integer(),
           boxed: boolean()
         }
@@ -454,6 +454,7 @@ defprotocol Livebook.Runtime do
             {:missing_secret, name :: String.t()}
             | {:interrupt, variant :: :normal | :error, message :: String.t()}
             | {:file_entry_forbidden, name :: String.t()}
+            | :dependencies
             | nil
         }
 

@@ -14,6 +14,12 @@ defmodule LivebookWeb.SessionLive.RuntimeComponent do
   end
 
   def update(assigns, socket) do
+    with %{runtime_status: :connecting} <- socket.assigns,
+         %{runtime_status: :connected} <- assigns,
+         true <- socket.assigns.type == runtime_type(assigns.runtime) do
+      send(self(), {:push_patch, socket.assigns.return_to})
+    end
+
     socket =
       socket
       |> assign(assigns)
@@ -82,6 +88,8 @@ defmodule LivebookWeb.SessionLive.RuntimeComponent do
             runtime={@runtime}
             runtime_status={@runtime_status}
             runtime_connect_info={@runtime_connect_info}
+            hub={@hub}
+            hub_secrets={@hub_secrets}
           />
         </div>
       </div>
