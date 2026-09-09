@@ -1,6 +1,8 @@
 # Livebook Desktop
 
 ```shell
+mix setup
+
 # Run app in development mode
 rel/app/tauri.sh dev
 
